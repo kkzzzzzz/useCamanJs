@@ -1,0 +1,26 @@
+{
+  "name": "usecamanjs",
+  "version": "1.0.0",
+  "description": "use CamanJs to generate a Photo wall",
+  "main": "io.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkzzzzzz/useCamanJs.git"
+  },
+  "keywords": [
+    "camanjs",
+    "photo_wall"
+  ],
+  "author": "kkzzzzzz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kkzzzzzz/useCamanJs/issues"
+  },
+  "homepage": "https://github.com/kkzzzzzz/useCamanJs#readme"
+}
