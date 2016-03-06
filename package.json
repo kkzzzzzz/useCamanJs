@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/kkzzzzzz/useCamanJs/issues"
   },
-  "homepage": "https://github.com/kkzzzzzz/useCamanJs#readme"
+  "homepage": "https://github.com/kkzzzzzz/useCamanJs#readme",
+  "dependencies": {
+    "caman": "^4.1.2"
+  }
 }
