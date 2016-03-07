@@ -8,7 +8,7 @@ Caman("#kobe_canvas", image, function () {
     this.brightness(-10);
     this.newLayer(function () {
         this.setBlendingMode("overlay");
-        this.opacity(10);
+        this.opacity(100);
         this.fillColor('#689900');
         this.filter.brightness(15);
         this.filter.contrast(10);
