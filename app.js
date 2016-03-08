@@ -5,6 +5,8 @@ app.use('/static', express.static('public'));
 
 
 
+
+
 app.get('/', function (req, res) {
 
   res.send("<img id='kobe_img'" +
