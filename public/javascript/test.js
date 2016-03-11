@@ -17,57 +17,25 @@ var image = document.getElementById("kobe_img");
 // });
 
 var mig1 = $('#1');
-var mig2 = $('#2');
-var bw = mig1.width();
-var bh = mig1.height()
-
-
-var s = Caman.Pixel.coordinatesToLocation(1,1,40);
-console.log(s)
-var i
-var j
-for(i=0;i<bh;i++){
-  for(j=0;j<bw;j++){
-    console.log();
-  }
+var mig1Ctx = mig1.get(0).getContext("2d");
+var img = new Image();
+img.src = '/static/img/1.jpg';
+img.onload = function() {
+  canvas.width = img.width;
+  canvas.height = img.height;
+  mig1Ctx.drawImage(img, 0, 0, img.width, img.height);
 }
 
-var c = $("#canvas");
-var cxt = c.get(0).getContext("2d");
-cxt.drawImage(mig1.get(0), 0, 0);
 
-Caman.Filter.register("example", function (adjust) {
-  this.process("example", function () {
-    this.locationXY(); // e.g. {x: 0, y: 0}
+var mig2 = $('#2');
+var mig2Ctx = mig2.get(0).getContext("2d");
 
-    // Gets the RGBA object for the pixel that is 2 rows down
-    // and 3 columns to the right.
-    // this.getPixelRelative(-2, 3);
 
-    // Sets the color for the pixel that is 2 rows down and
-    // 3 columns to the right.
-    this.putPixel(-2, 3, {
-      r: 100,
-      g: 120,
-      b: 140,
-      a: 255
-    });
 
-    // Gets the RGBA object for the pixel at the given absolute
-    // coordinates. This is relative to the top left corner.
-    this.getPixel(20, 50);
 
-    // Sets the color for the pixel at the given absolute coordinates.
-    // Also relative to the top left corner.
-    this.putPixel(20, 50, {
-      r: 100,
-      g: 120,
-      b: 140,
-      a: 255
-    });
-  });
-});
-
+// var c = $("#canvas");
+// var cxt = c.get(0).getContext("2d");
+// cxt.drawImage(mig1.get(0), 0, 0);
 
 Caman.Filter.register("posterize", function (adjust) {
   // Pre-calculate some values that will be used
@@ -80,16 +48,72 @@ Caman.Filter.register("posterize", function (adjust) {
     rgba.r = Math.floor(Math.floor(rgba.r / numOfAreas) * numOfValues);
     rgba.g = Math.floor(Math.floor(rgba.g / numOfAreas) * numOfValues);
     rgba.b = Math.floor(Math.floor(rgba.b / numOfAreas) * numOfValues);
-    rgba.a = 50;
+    rgba.a = 128;
     // Return the modified RGB values
     return rgba;
   });
 });
 
 
-$("#canvas").on('click',function(e){
-  Caman("#canvas", mig1, function () {
-    this.posterize(10);
-    this.render();
-  });
+img = new Image();
+img.src = '/static/img/2.png';
+img.onload = function() {
+  canvas.width = img.width;
+  canvas.height = img.height;
+  mig2Ctx.drawImage(img, 0, 0, img.width, img.height);
+}
+
+var smallWidth  = img.width
+var smallHeight = img.width
+
+var c = $("#canvas");
+var cxt = c.get(0).getContext("2d");
+cxt.drawImage(mig1.get(0), 0, 0);
+
+$("#vintagebtn").on('click',function (e) {
+
+  var i;
+  var j;
+  for(i = 0; i< smallWidth; i++){
+    for(j = 0; j< smallWidth; j++){
+        var sData = mig2Ctx.getImageData(i,j,0,0);
+        var bData = mig1Ctx.getImageData(i,j,0,0);
+
+        cxt.putImageData(mix(sData,bData),0,0)
+    }
+  }
+
+  sData = mig2Ctx.getImageData(0,0,smallWidth,smallWidth)
+
+  mydata=mig1Ctx.getImageData(100,100,200,200)
+  for (var i=0;i<mydata.data.length;i+=4){
+
+    console.log(mydata.data[i+3]);
+    mydata.data[i+3]=50
+  }
+  cxt.putImageData(mydata,100,100)
+  // mydata=cxt.getImageData(40,40,20,20)
+  // for (var i=0;i<1600;i+=4){
+  //   mydata.data[i+3]=128
+  // }
+  // cxt.putImageData(mydata,20,20)
+
 })
+
+function mix(sData,bData) {
+  return [
+    sData[0]+bDate[0],
+    sData[1]+bDate[1],
+    sData[2]+bDate[2],
+    125
+    ]
+}
+
+
+//
+// $("#canvas").on('click',function(e){
+//   Caman("#canvas", mig1, function () {
+//     this.posterize(10);
+//     this.render();
+//   });
+// })
